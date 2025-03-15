@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 function Signup() {
 
     const [username, setUsername] = useState('');
-    const [isUsernameAvailable, setIsUsernameAvailable] = useState(false);
+    const [isUsernameAvailable, setIsUsernameAvailable] = useState(true);
     const [name, setName] = useState('');
+    const navigate = useNavigate();
 
     async function checkUsername() {
         const response = await fetch('https://chat-room.amirhoseinsadeghian2017.workers.dev/auth', {
@@ -16,9 +18,15 @@ function Signup() {
         });
 
         const data = await response.json();
-        setIsUsernameAvailable(data.message === 'available!');
-        // console.log(data.message);
-        // console.log(isUsernameAvailable);
+        
+        if (!(data.message === 'available!')) {
+            setIsUsernameAvailable(false);
+        }
+        else{
+            localStorage.setItem('username', username);
+            localStorage.setItem('name', name);
+            navigate('/chatroom');
+        }
     }
 
     return (
@@ -34,6 +42,7 @@ function Signup() {
                     <input className='text-center p-2 border-2 border-red-500 rounded-4xl outline-0' type="text" placeholder='Enter your Username'
                         onChange={(e) => setUsername(e.target.value)}
                     />
+                    {isUsernameAvailable ? null : <p className='text-red-600'>This Username Is Already Taken</p>}
 
                     <button className='bg-green-400 text-black px-5 py-2 rounded-4xl cursor-pointer'
                         onClick={checkUsername}
