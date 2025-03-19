@@ -1,27 +1,18 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import './App.css'
 import Signup from '../components/Signup';
 import Chatroom from '../components/Chatroom';
+import { UsernameContext } from '../Context/Username';
 
 function App() {
 
-    const [username, setusername] = useState('')
+    const {username, setUsername} = useContext(UsernameContext)
 
     useEffect(() => {
-        // const eventSource = new EventSource('https://chat-room.amirhoseinsadeghian2017.workers.dev/events');
-
-        // eventSource.onmessage = (event) => {
-        //     console.log(event.data);
-        // }
-
-        // eventSource.onerror = (event) => {
-        //     console.error(event);
-        // }
-
         try{
             const localStorageUsername = localStorage.getItem('username');
             if (localStorageUsername) {
-                setusername(localStorageUsername);
+                setUsername(localStorageUsername);
             }
         } catch (error) {
             console.error(error);
