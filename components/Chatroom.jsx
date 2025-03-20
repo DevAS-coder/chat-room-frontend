@@ -17,10 +17,23 @@ function Chatroom() {
     // eventSource.onmessage = (event) => {
     //   if (event.data !== 'No New Messages') {
     //     console.log(event.data);
-    //     setMessages(prevMessages => [...prevMessages, JSON.parse(event.data)]);
+        
+    //     const newMessages = JSON.parse(event.data);
+    //     const localNewMessages = localStorage.getItem('newMessages');
+    //     const parsedLocalNewMessages = localNewMessages ? JSON.parse(localNewMessages) : []; 
+        
+    //     newMessages.map((newMessage) => {
+    //       const messageExists = parsedLocalNewMessages.find(message => message.id === newMessage.id);
+    //       if (!messageExists) {
+    //         setMessages((prevMessages) => [...prevMessages, newMessage]);
+    //         localStorage.setItem('newMessages', JSON.stringify([...parsedLocalNewMessages, newMessage]));
+    //       }
+    //     })
     //   }
+
     //   else {
     //     console.log(event.data);
+    //     localStorage.removeItem('newMessages');
     //   }
     // }
 
