@@ -23,7 +23,7 @@ function Signup() {
             setIsUsernameAvailable(false);
         }
         else{
-            localStorage.setItem('username', username);
+            localStorage.setItem('username', username.toLowerCase());
             localStorage.setItem('name', name);
             navigate('/chatroom');
         }

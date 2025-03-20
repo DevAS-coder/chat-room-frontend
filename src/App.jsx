@@ -22,11 +22,9 @@ function App() {
 
 
     return (
-        <>
             <div className='container'>
                 {username ? <Chatroom /> : <Signup />}
             </div>
-        </>
     )
 }
 

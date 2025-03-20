@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import App from './App.jsx'
 import Chatroom from '../components/Chatroom.jsx'
 import { UsernameProvider } from '../Context/Username.jsx'
+import { MessagesProvider } from '../Context/Messages';
 
 const router = createBrowserRouter([
   {
@@ -17,8 +18,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <UsernameProvider>
-    <RouterProvider router={router}>
-      <App />
-    </RouterProvider>
+    <MessagesProvider>
+      <RouterProvider router={router}>
+        <App />
+      </RouterProvider>
+    </MessagesProvider>
   </UsernameProvider>
 )
