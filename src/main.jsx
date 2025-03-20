@@ -14,7 +14,11 @@ const router = createBrowserRouter([
     path: '/chatroom',
     element: <Chatroom />,
   }
-])
+],
+// {
+//   basename: '/projects/chatroom/',
+// }
+)
 
 createRoot(document.getElementById('root')).render(
   <UsernameProvider>
