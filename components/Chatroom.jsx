@@ -4,6 +4,7 @@ import Header from './Header';
 import Chat from './Chat';
 import { UsernameContext } from '../Context/Username';
 import { MessagesContext } from '../Context/Messages';
+import SendMessage from './SendMessage';
 
 function Chatroom() {
 
@@ -12,34 +13,34 @@ function Chatroom() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    // const eventSource = new EventSource('https://chat-room.amirhoseinsadeghian2017.workers.dev/events');
+    const eventSource = new EventSource('https://chat-room.amirhoseinsadeghian2017.workers.dev/events');
 
-    // eventSource.onmessage = (event) => {
-    //   if (event.data !== 'No New Messages') {
-    //     console.log(event.data);
-        
-    //     const newMessages = JSON.parse(event.data);
-    //     const localNewMessages = localStorage.getItem('newMessages');
-    //     const parsedLocalNewMessages = localNewMessages ? JSON.parse(localNewMessages) : []; 
-        
-    //     newMessages.map((newMessage) => {
-    //       const messageExists = parsedLocalNewMessages.find(message => message.id === newMessage.id);
-    //       if (!messageExists) {
-    //         setMessages((prevMessages) => [...prevMessages, newMessage]);
-    //         localStorage.setItem('newMessages', JSON.stringify([...parsedLocalNewMessages, newMessage]));
-    //       }
-    //     })
-    //   }
+    eventSource.onmessage = (event) => {
+      if (event.data !== 'No New Messages') {
+        console.log(event.data);
 
-    //   else {
-    //     console.log(event.data);
-    //     localStorage.removeItem('newMessages');
-    //   }
-    // }
+        const newMessages = JSON.parse(event.data);
+        const localNewMessages = localStorage.getItem('newMessages');
+        const parsedLocalNewMessages = localNewMessages ? JSON.parse(localNewMessages) : []; 
 
-    // eventSource.onerror = (event) => {
-    //   console.error(event);
-    // }
+        newMessages.map((newMessage) => {
+          const messageExists = parsedLocalNewMessages.find(message => message.id === newMessage.id);
+          if (!messageExists) {
+            setMessages((prevMessages) => [...prevMessages, newMessage]);
+            localStorage.setItem('newMessages', JSON.stringify([...parsedLocalNewMessages, newMessage]));
+          }
+        })
+      }
+
+      else {
+        console.log(event.data);
+        localStorage.removeItem('newMessages');
+      }
+    }
+
+    eventSource.onerror = (event) => {
+      console.error(event);
+    }
 
     try {
       const localStorageUsername = localStorage.getItem('username');
@@ -58,6 +59,7 @@ function Chatroom() {
     <div className='flex justify-center items-center h-screen'>
       <Header />
       <Chat />
+      <SendMessage />
     </div>
   )
 }
